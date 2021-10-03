@@ -16,9 +16,16 @@
       var me = document.currentScript;
     </script>
     <div id="scores" class = "box">
-      <div class="route"></div>
-      <div class="route"></div>
-      <div class="route"></div>
+      <div id ='info' class="inner">Danger Index is between 0 and 10
+        <br>
+        <p style="color:blue">Route 1 = Blue</p>
+        <p style="color:green">Route 2 = Green</p>
+        <p style="color:black">Route 3 = Black</p>
+        <p style="color:red">Route 4 = Red</p>
+        <p style="color:orange">Route 5 = Orange</p>
+        <p style= "font-style: italic;">Danger Index = (Sum of all accidents and their severities along route in the last two years / Distance of route) x 1000</p>
+        <input type="button" value="New Search" onClick="location.href=location.href">
+      </div>
     </div>
   </body>
 </html>

@@ -37,9 +37,12 @@ function plotDirections(start, end) {
     .then((json) => {
       // var parser = new DOMParser();;
       // var doc = parser.parseFromString(html, "text/html");
-      val = JSON.stringify(json);
+      val = JSON.stringify(json).replace("_", " ");
       // doc.querySelector('scores').innerHTML = json;
-      document.getElementById("scores").innerHTML = val;
+      var thing = document.createElement('p');
+      var thing2 = document.createTextNode(val);
+      thing.appendChild(thing2);
+      document.getElementById("info").prepend(thing);
       // await sleep(2000);
       console.log("GET response:");
       console.log(val);
@@ -50,7 +53,7 @@ function plotDirections(start, end) {
   directionsService.route(request, function (response, status) {
     if (status == google.maps.DirectionsStatus.OK) {
       var routes = response.routes;
-      var colors = ["red", "green", "blue", "orange", "yellow", "black"];
+      var colors = ["blue", "green", "black", "red", "orange"];
       var directionsDisplays = [];
 
       // Reset the start and end variables to the actual coordinates
