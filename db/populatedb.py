@@ -16,7 +16,7 @@ with open('db/US_accident_data.csv', newline='') as csvfile:
     i = 0
     formatted_input = ""
     for row in reader:
-        if i == 0:
+        if i == 0 or row[15] != 'TX':
             i += 1
             continue
         row[2] = convert_to_string(row[2])

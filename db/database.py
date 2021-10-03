@@ -14,7 +14,7 @@ class DB:
         self.mydb.commit()
 
     def CreateAccidentTable(self):
-        command = "Create TABLE IF NOT EXISTS accidents (" \
+        command = "CREATE TABLE IF NOT EXISTS accidents (" \
                   "accident_id INT NOT NULL AUTO_INCREMENT, " \
                   "severity INT NOT NULL, " \
                   "start_time TIMESTAMP NOT NULL, " \
@@ -39,4 +39,22 @@ class DB:
                   "description, number, street, city, state, zipcode) VALUES " + values + ";"
         self.mycursor.execute(command)
         self.mydb.commit()
-        
+    
+    def QueryAccidents(self, route_coords, threshold):
+        # lat_coords = [coords[0] for coords in route for route in route_coords]
+        # lng_coords = [coords[1] for coords in route for route in route_coords]    
+        coords = '(' + '),('.join([str(coord[0]) + ',' + str(coord[1]) for coord in route_coords]) + ')'
+        self.mycursor.execute("drop table if exists tmp;")
+        self.mydb.commit()
+        self.mycursor.execute("create temporary table tmp (lat float not null, lng float not null);")
+        self.mydb.commit()
+        self.mycursor.execute("insert into tmp values" + coords + ";")
+        command = "select severity from accidents where exists (select * from tmp where (accidents.start_lat between " \
+                  "tmp.lat - " + str(threshold) + " and tmp.lat + " + str(threshold) + ") and (accidents.start_long between " \
+                  "tmp.lng - " + str(threshold) + " and tmp.lng + " + str(threshold) + "));"
+        self.mycursor.execute(command)
+        return self.mycursor.fetchall()
+
+    def AccidentsCount(self):
+        self.mycursor.execute("Select COUNT(*) FROM accidents;")
+        return self.mycursor.fetchall()
