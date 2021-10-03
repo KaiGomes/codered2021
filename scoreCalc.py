@@ -67,8 +67,8 @@ class Route:
         totalScore= -1
         score_acc = self.acc_score(self.numOfAccids)
         score_sev = self.sev_score(self.severity)
-        # totalScore = "{:.3f}".format(100-(score_acc + score_sev)/float(self.distance))
-        totalScore= "{:.3f}".format((self.numOfAccids * self.severity)/float(self.distance))
+        totalScore = "{:.3f}".format(100-(score_acc + score_sev)/float(self.distance))
+        # totalScore= "{:.3f}".format((self.numOfAccids * self.severity)/float(self.distance))
 
         #print(totalScore)
 
