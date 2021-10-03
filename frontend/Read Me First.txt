@@ -1,0 +1,3 @@
+1. Create your API key on Google cloud console.
+2. Paste it in the code at appropriate place.
+3. If you need any help Watch the related video : https://youtu.be/2LvwNMgW4vw
