@@ -1,4 +1,5 @@
 config.py
 node_modules
 __pycache__
+__pycache__/
 US_accident_data.csv
