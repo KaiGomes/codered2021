@@ -1,12 +1,21 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-</head>
-<body>
-    
-</body>
+<html>
+  <head>
+    <title>Route Safety Lookup</title>
+    <link rel="stylesheet" type="text/css" href="static/style.css" />
+  </head>
+  <body>
+    <!-- <h1>GOOGLE MAP API</h1> -->
+    <hr>
+    <div id="map-canvas"></div>
+    <script
+      src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBsdj_RYfwK4Zk60nfD6Y4AFBDZnQM9Wys"
+    ></script>
+    <div id="scores" class = "box">
+    </div>
+    <script type="text/javascript" src="{{ url_for('static', filename='script.js') }}"></script>
+    <script>
+      var me = document.currentScript;
+    </script>
+  </body>
 </html>

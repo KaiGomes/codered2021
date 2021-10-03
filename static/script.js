@@ -13,22 +13,20 @@ function initialize() {
   map = new google.maps.Map(document.getElementById("map-canvas"), myOptions);
 
 
-  var start = prompt ("Enter start point: ", "Houston");
-  var end = prompt("Enter destination: ", "Austin");
+  var start = prompt ("Enter start point: ", "16026 Green Manor Drive, Houston, TX");
+  var end = prompt("Enter destination", "4800 Calhoun Road, Houston, TX");
 
-  // var xml = new XMLHttpRequest();
-  // xml.open("POST","{{url_for('func.func')}}",true); 
-  // xml.setRequestHeader("Content-type","application/x-www-form-urlencoded");
-
-  // xml.onload = function(){
-  //     var dataReply = JSON.parse(this.responseText);
-  //     };//endfunction
-
-  // dataSend= JSON.stringify({
-  //     'page_data':'some_data'
-  // });
-
-  // xml.send(dataSend);
+  fetch(`/routes/${start}/${end}`)
+  .then(response => response.json())
+  .then(json => {
+    // var parser = new DOMParser();;
+    // var doc = parser.parseFromString(html, "text/html");
+    var val = JSON.stringify(json);
+    // doc.querySelector('scores').innerHTML = json;
+    document.getElementById('scores').innerHTML = val;
+    console.log('GET response:');
+    console.log(val);
+});
 
   plotDirections(start, end);
 }
@@ -36,7 +34,7 @@ function initialize() {
 function plotDirections(start, end) {
 
   var method = 'DRIVING';
-  
+
   var request = {
     origin: start,
     destination: end,
@@ -49,7 +47,7 @@ function plotDirections(start, end) {
     if (status == google.maps.DirectionsStatus.OK) {
 
       var routes = response.routes;
-      var colors = ['blue', 'green', 'black', 'red', 'yellow', 'white'];
+      var colors = ['red', 'green', 'blue', 'orange', 'yellow', 'black'];
       var directionsDisplays = [];
 
       // Reset the start and end variables to the actual coordinates
@@ -58,7 +56,6 @@ function plotDirections(start, end) {
 
 			// Loop through each route
       for (var i = 0; i < routes.length; i++) {
-
         var directionsDisplay = new google.maps.DirectionsRenderer({
           map: map,
           directions: response,
@@ -69,8 +66,20 @@ function plotDirections(start, end) {
             strokeColor: colors[i],
             strokeWeight: 4,
             strokeOpacity: .3
-          }
-        });
+          }}, false)
+
+      const routeVar = document.getElementsByClassName("route");
+      for (let j = 0; j < routes.length; j++) {
+        routeVar[j].setAttribute('id', j);
+        document.getElementById(j).innerHTML = 'Route<span class="numSpan"></span>';
+      }
+
+      for (let j = 0; j < routes.length; j++) {
+        const spanVar = document.getElementsByClassName("numSpan");
+        routeVar[j].setAttribute('id', 'none');
+        spanVar[j].setAttribute('id',j);
+        document.getElementById(j).innerHTML =" " + (j + 1) + "Append JSON here?";
+      }
 
         // Push the current renderer to an array
         directionsDisplays.push(directionsDisplay);
