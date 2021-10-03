@@ -12,8 +12,8 @@ import pyproj
 
 class GoogleMapsWrapper:
     def __init__(self):
-        gmaps = googlemaps.Client(key = API_KEY)
-        geodesic = pyproj.Geod(ellps='WGS84')
+        self.gmaps = googlemaps.Client(key = API_KEY)
+        self.geodesic = pyproj.Geod(ellps='WGS84')
 
     # def get_bearing(self, lat1, lat2, long1, long2):
     #     brng = Geodesic.WGS84.Inverse(lat1, long1, lat2, long2)['azi1']
@@ -34,20 +34,23 @@ class GoogleMapsWrapper:
         return r.json()
         
     def extract_directions(self, origin, dest, data_type = 'json'):
-        base_geocode_url = f"https://maps.googleapis.com/maps/api/directions/{data_type}"
-        parameters = {
-            "origin" : origin,
-            "destination" : dest,
-            "alternatives" : "true",
-            "key" : API_KEY
-        }
-        url_params = urlencode(parameters)
-        url = f"{base_geocode_url}?{url_params}"
-        print(url)
-        r = requests.get(url)
-        if r.status_code not in range (200,299):
-            return {}
-        return r.json()
+        # base_geocode_url = f"https://maps.googleapis.com/maps/api/directions/{data_type}"
+        # parameters = {
+        #     "origin" : origin,
+        #     "destination" : dest,
+        #     "alternatives" : "true",
+        #     "key" : API_KEY
+        # }
+        # url_params = urlencode(parameters)
+        # url = f"{base_geocode_url}?{url_params}"
+        # print(url)
+        # r = requests.get(url)
+        # if r.status_code not in range (200,299):
+        #     return {}
+        # return r.json()
+        result = self.gmaps.directions(origin, dest, mode='driving', alternatives=True)
+        # print(result[0])
+        return result
 
     def getMatrixDisance(self, origin, dest, data_type = 'json'):
         base_matrix_url = f"https://maps.googleapis.com/maps/api/distancematrix/{data_type}"
@@ -94,7 +97,6 @@ class GoogleMapsWrapper:
 
     def get_coordinate_path(self, routes):
         return [[(step['start_location']['lat'], step['start_location']['lng']) if step != route['legs'][0]['steps'][-1] else (step['end_location']['lat'], step['end_location']['lng']) for step in route['legs'][0]['steps']] for route in routes]
-
 #print (extract_lat_long(origin))
 #print (extract_lat_long(dest))
 # output = extract_directions(origin, dest)

@@ -4,6 +4,7 @@ import os
 sys.path.append(os.path.abspath('.'))
 from db.database import DB
 from google_maps_route import GoogleMapsWrapper
+from scoreCalc import Route
 
 app = Flask(__name__)
 
@@ -19,13 +20,21 @@ def index():
 
 @app.route('/routes/<origin>/<dest>')
 def routes(origin, dest):
-    raw_routes = gmaps_wrapper.extract_directions(origin, dest)['routes']
+    overlap = {}
+    raw_routes = gmaps_wrapper.extract_directions(origin, dest)
+    overlap['num_routes'] = len(raw_routes)
+    distances = [route['legs'][0]['distance']['value'] for route in raw_routes]
     routes = gmaps_wrapper.get_coordinate_path(raw_routes)
     count = 0
-    overlap = {}
-    for route in routes:
+    
+    for distance, route in zip(distances, routes):
         overlap[f'Route-{count}'] = myDB.QueryAccidents(route, THRESHOLD)
-        overlap['num'] = len(overlap[f'Route-{count}'])
+        num = len(overlap[f'Route-{count}'])
+        total_sev = sum([sev['severity'] for sev in overlap[f'Route-{count}']])
+        # new_route = Route(f'Route-{count}', total_sev, num,  distance)
+        danger_score = total_sev / float(distance)
+        # overlap[f'Route-{count}'] = danger_score
+        overlap[f'Route-{count}'] = danger_score
     return overlap
 
 if __name__ == '__main__':
