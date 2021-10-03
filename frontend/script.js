@@ -13,8 +13,8 @@ function initialize() {
   map = new google.maps.Map(document.getElementById("map-canvas"), myOptions);
 
 
-  var start = prompt ("Enter start point: ", "16026 Green Manor Drive, Houston, TX");
-  var end = prompt("Enter destination", "4800 Calhoun Road, Houston, TX");
+  var start = prompt ("Enter start point: ", "Houston");
+  var end = prompt("Enter destination: ", "Austin");
 
   plotDirections(start, end);
 }
@@ -35,7 +35,7 @@ function plotDirections(start, end) {
     if (status == google.maps.DirectionsStatus.OK) {
 
       var routes = response.routes;
-      var colors = ['red', 'green', 'blue', 'orange', 'yellow', 'black'];
+      var colors = ['blue', 'green', 'black', 'red', 'yellow', 'white'];
       var directionsDisplays = [];
 
       // Reset the start and end variables to the actual coordinates
