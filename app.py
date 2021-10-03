@@ -35,6 +35,7 @@ def routes(origin, dest):
         danger_score = total_sev / float(distance)
         # overlap[f'Route-{count}'] = danger_score
         overlap[f'Route-{count}'] = danger_score
+        count += 1
     return overlap
 
 if __name__ == '__main__':
