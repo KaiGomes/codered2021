@@ -8,8 +8,8 @@ from urllib.parse import urlencode
 
 
 gmaps = googlemaps.Client(key = API_KEY)
-origin = "106 Zephyr Bend Place, The Woodlands, TX"
-dest = "4800 Calhoun Rd, Houston, TX"
+origin = "4800 Calhoun Rd, Houston, TX"
+dest = "16026 Green Manor Drive, Houston, TX"
 
 # data_type = 'json'
 # base_geocode_url = f"https://maps.googleapis.com/maps/api/geocode/{data_type}"
