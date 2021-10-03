@@ -1,0 +1,37 @@
+/* Always set the map height explicitly to define the size of the div
+       * element that contains the map. */
+      /* body{
+          width: 100vw;
+          height: 100vh;
+      }
+      
+       #map-canvas {
+        height: 80%;
+        width: 90%;
+        margin: auto;
+      } */
+      
+      #map-canvas{
+        position: absolute;
+        top: 0px;
+        left: 0;
+        bottom: 0px;
+        right: 0;
+      }
+
+      .box
+      {
+        position: relative;
+        width: 400px;
+        height: 200px;
+        background: rgba(173, 216, 230, 0.7);
+        float: right;
+        text-align: left;
+        border-radius: 30px;
+        margin: 40px;
+      }
+
+      .inner
+      {
+        margin: 40px;
+      }
